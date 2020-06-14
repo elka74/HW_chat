@@ -1,9 +1,11 @@
 package server;
 
 import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SimpleAuthService implements AuthService {
+
     private class UserData{
         String login;
         String password;
@@ -24,6 +26,10 @@ public class SimpleAuthService implements AuthService {
         for (int i = 1; i <= 10 ; i++) {
             users.add(new UserData("login"+i, "pass"+i, "nick"+i));
         }
+
+        for (int i = 1; i <= 3 ; i++) {
+            users.add(new UserData(""+i, ""+i, "simple_nick"+i));
+        }
     }
 
     @Override
@@ -35,6 +41,17 @@ public class SimpleAuthService implements AuthService {
         }
 
         return null;
+    }
+
+    @Override
+    public boolean registration(String login, String password, String nickname) {
+        for (UserData o:users ) {
+            if(o.login.equals(login)) {
+                return false;
+            }
+        }
+        users.add(new UserData(login, password, nickname));
+        return true;
     }
 }
 
